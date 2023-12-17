@@ -32,7 +32,7 @@ app.get('/file/:name',(req,res)=>{
   const filepath=path.join(__dirname,'./files/',req.params.name)
   const file= fs.readFile(filepath,'utf-8',(err,data)=>{
     if(err){
-     return  res.status(404).send('File not found')
+      res.status(404).send('File not found')
 
     }
     res.send(data)
