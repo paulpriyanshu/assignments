@@ -16,6 +16,20 @@ setInterval(() => {
     numberOfRequestsForUser = {};
 }, 1000)
 
+app.use((req,res,next)=>{
+  const userid=req.header['user-id']
+  if(numberOfRequestsForUser[userid]){
+    numberOfRequestsForUser[userid]++;
+    if(numberOfRequestsForUser[userid]=1){
+      next()
+    }
+    if(numberOfRequestsForUser[userid]>5){
+      res.status(404).send("Server Blocked")
+    }else{
+      next()
+    }
+  }  
+})
 app.get('/user', function(req, res) {
   res.status(200).json({ name: 'john' });
 });
